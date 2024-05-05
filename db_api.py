@@ -38,7 +38,8 @@ def send_query(query: str):
     except Exception as e:
         connection.rollback()
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
+    finally:
+        engine.dispose()
 
 @app.post("/query/")
 async def run_query(query: str):

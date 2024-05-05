@@ -35,6 +35,8 @@ def terminal_query(query: str):
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")
+    finally:
+        engine.dispose()
 
 # EXAMPLE OF USAGE IN TERMINAL/BASH
 # python -c "from sequal_queries import terminal_query; terminal_query('SELECT * FROM best_movies')"
