@@ -37,9 +37,10 @@ def send_query(query: str):
                 return f"Query executed successfully."
     except Exception as e:
         connection.rollback()
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Database error: {str(e)}")
     finally:
         engine.dispose()
+
 
 @app.post("/query/")
 async def run_query(query: str):
@@ -53,10 +54,3 @@ async def run_query(query: str):
         List[Dict] or str: List of dictionaries containing query result if query is SELECT, or message for other queries.
     """
     return send_query(query)
-
-
-
-
-
-
-
