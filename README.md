@@ -1,6 +1,6 @@
 # Netflix_db_setup
 
-The purpose of this project is to manage Netflix user data by employing data cleaning
+The purpose of this project is to manage Netflix library data by employing data cleaning
 and normalization processes. Once the data has been cleaned and normalized, it is structured
 into tables and uploaded to a PostgreSQL database. These procedures ensure that the data
 is systematically organized and ready for further analysis or integration into other applications.
