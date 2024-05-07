@@ -14,7 +14,7 @@ def convert_columns_to_lowercase(func):
 
 
 @convert_columns_to_lowercase
-def explode_list(data, *columns):
+def explode_list(data: pd.DataFrame, *columns) -> pd.DataFrame:
     """
     Explodes specified columns containing comma-separated values into separate rows.
 

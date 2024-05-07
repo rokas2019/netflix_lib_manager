@@ -1,6 +1,6 @@
 import pandas as pd
 from create_db_engine import create_db_engine
-from create_tables import create_table_with_constraint, create_table, add_constrains
+from create_tables import create_tables
 from data_handlers import explode_list, get_distinct_values_from_column
 from db_conn_settings import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT
 
@@ -51,27 +51,24 @@ if __name__ == "__main__":
 
     # Create tables and relationships
     id_column_name = 'index'
-    create_table_with_constraint(engine, 'titles_table', id_column_name, titles_raw, titles_table, True, 'titles_table')
-    create_table_with_constraint(engine, 'title_genres_table', id_column_name, modified_genres_df, titles_genres_table,
-                                 False, 'titles_table')
-    create_table_with_constraint(engine, 'titles_production_countries', id_column_name, modified_production_countries,
-                                 titles_production_countries, False, 'titles_table')
 
-    create_table_with_constraint(engine, 'credits_table', id_column_name, credits_raw, credits_table, True,
-                                 'credits_table')
-    create_table_with_constraint(engine, 'characters_table', id_column_name, modified_character_df, characters_table,
-                                 False,
-                                 'credits_table')
+    create_tables(engine, 'titles_table', titles_raw, titles_table, id_column_name, True)
 
-    create_table(engine, 'best_movies', best_movies_raw, best_movies, False)
-    create_table(engine, 'best_shows', best_shows_raw, best_shows, False)
-    create_table(engine, 'best_shows_by_year', best_shows_by_year_raw, best_shows_by_year, False)
-    create_table(engine, 'best_movies_by_year', best_movies_by_year_raw, best_movies_by_year, False)
+    create_tables(engine, 'titles_genres_table', modified_genres_df, titles_genres_table, id_column_name, False,
+                  'titles_table')
 
-    create_table(engine, 'main_genres', main_genres, main_gen_col, True)
-    add_constrains(engine, 'main_genres', 'index', True, 'main_genres')
-    create_table(engine, 'main_productions', main_production, main_prod_col, True)
-    add_constrains(engine, 'main_productions', 'index', True, 'main_productions')
+    create_tables(engine, 'titles_production_countries', modified_production_countries, titles_production_countries,
+                  id_column_name, False, 'titles_table')
+
+    create_tables(engine, 'credits_table', credits_raw, credits_table, id_column_name, True)
+    create_tables(engine, 'characters_table', modified_character_df, characters_table, id_column_name, False,
+                  'credits_table')
+    create_tables(engine, 'best_movies', best_movies_raw, best_movies, id_column_name, True)
+    create_tables(engine, 'best_shows', best_shows_raw, best_shows, id_column_name, True)
+    create_tables(engine, 'best_shows_by_year', best_shows_by_year_raw, best_shows_by_year, id_column_name, True)
+    create_tables(engine, 'best_movies_by_year', best_movies_by_year_raw, best_movies_by_year, id_column_name, True)
+    create_tables(engine, 'main_genres', main_genres, main_gen_col, id_column_name, True, None, True)
+    create_tables(engine, 'main_productions', main_production, main_prod_col, id_column_name, True, None, True)
 
     # Insert raw data into database tables
     titles_raw.to_sql('raw_titles', engine, if_exists='replace', index=False)
