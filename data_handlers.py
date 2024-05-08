@@ -2,18 +2,6 @@ import ast
 import pandas as pd
 
 
-def convert_columns_to_lowercase(func):
-    def wrapper(*args, **kwargs):
-        # Call the original function and get the result DataFrame
-        result_df = func(*args, **kwargs)
-        # Convert column names to lowercase
-        result_df.columns = map(str.lower, result_df.columns)
-        return result_df
-
-    return wrapper
-
-
-@convert_columns_to_lowercase
 def explode_list(data: pd.DataFrame, *columns) -> pd.DataFrame:
     """
     Explodes specified columns containing comma-separated values into separate rows.
@@ -36,7 +24,6 @@ def explode_list(data: pd.DataFrame, *columns) -> pd.DataFrame:
     return data
 
 
-@convert_columns_to_lowercase
 def get_distinct_values_from_column(*data_frames, column_name: str) -> pd.DataFrame:
     """
     Get distinct values from a specified column in multiple DataFrames.
